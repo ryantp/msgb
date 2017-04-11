@@ -3,6 +3,7 @@ Message Box -- cli password (or other sensitive information) storage tool
 
 # HOW TO USE:
 [Optional] Place the tool (msgb.bat and src/) in a dir that is listed in the PATH variable.
+
     C:\> msgb addUser
     >> Username: Example
     >> Password:
