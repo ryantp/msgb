@@ -120,9 +120,15 @@ def addUser():
 
 ## SECTION II.B -- chPass; only requires chPass
 def chPass(user):
-	oldpass = readShadow(user)
+	phash = readShadow(user)
 	print("Enter your current password")
-	checkpass = getpass.getpass()
+	oldpass = getpass.getpass()
+	if phash == hashlib.sha512(oldpass.encode("utf-8")).hexdigest():
+		pass
+	else:
+		print("Incorrect password.")
+		sys.exit(1)
+		
 	print("\nEnter new password")
 	np1 = getpass.getpass()
 	print("Retype password")
@@ -183,7 +189,7 @@ def saveToDatabase(user, key, msg):
 	check_table(user) # first, determine if db even exists
 
 	SQLCMD = "INSERT INTO 'msg_box_%(u)s' (user, key, msg) VALUES (?,?,?)" % {"u": user}
-	VALUES = (user, key, rciph.enc(msg))
+	VALUES = (user, key, rciph.enc(msg, user))
 	conn = sqlite3.connect(DB)
 	cur = conn.cursor()
 	try:
@@ -208,7 +214,7 @@ def readWithKey(user, key):
 		sys.exit(6)
 
 	if r:
-		print(rciph.dec(r[0][0]))
+		print(rciph.dec(r[0][0], user))
 	else:
 		print("No value for KEY: %(k)s" % {"k": key})
 

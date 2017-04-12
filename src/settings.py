@@ -1,5 +1,5 @@
 # replace [$PATH] with the file path leading to the msgb directory
 sroot = "[$PATH]/msgb"
 
-priv = sroot + "/appd/alconfig/rsa_privkey.txt"
-pub = sroot + "/appd/alconfig/rsa_pubkey.txt"
+priv = sroot + "/appd/config/%(user)s_privkey.txt"
+pub = sroot + "/appd/config/%(user)s_pubkey.txt"
